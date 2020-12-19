@@ -13,7 +13,7 @@ clock = pygame.time.Clock()
 
 
 def load_level(filename):
-    filename = "data/" + filename
+    filename = "maps/" + filename
     # читаем уровень, убирая символы перевода строки
     with open(filename, 'r') as mapFile:
         level_map = [line.strip() for line in mapFile]
@@ -47,10 +47,8 @@ def terminate():
 
 
 def start_screen():
-    intro_text = ["ЗАСТАВКА", "",
-                  "Правила игры",
-                  "Если в правилах несколько строк,",
-                  "приходится выводить их построчно"]
+    intro_text = ["ЗАСТАВКА",
+                  "ЧТОБЫ НАЧАТЬ, ВВЕДИТЕ НАЗВАНИЕ ФАЙЛА И НАЖМИТЕ НА ЛЮБУЮ КНОПКУ"]
 
     fon = pygame.transform.scale(load_image('fon.jpg'), (WIDTH, HEIGHT))
     screen.blit(fon, (0, 0))
@@ -144,10 +142,12 @@ player = None
 
 start_screen()
 
+map_current = input()
+
 camera = Camera()
 
 running = True
-player, level_x, level_y = generate_level(load_level('map.txt'))
+player, level_x, level_y = generate_level(load_level(map_current))
 
 while running:
     all_sprites.draw(screen)
@@ -157,16 +157,16 @@ while running:
             running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
-                if load_level('map.txt')[player.rect.y // tile_height][(player.rect.x + tile_width) // tile_width] == '.' or load_level('map.txt')[player.rect.y // tile_height][(player.rect.x + tile_width) // tile_width] == '@':
+                if load_level(map_current)[player.rect.y // tile_height][(player.rect.x + tile_width) // tile_width] == '.' or load_level('map.txt')[player.rect.y // tile_height][(player.rect.x + tile_width) // tile_width] == '@':
                     player.rect.x += tile_width
             if event.key == pygame.K_LEFT:
-                if load_level('map.txt')[player.rect.y // tile_height][(player.rect.x - tile_width) // tile_width] == '.' or load_level('map.txt')[player.rect.y // tile_height][(player.rect.x - tile_width) // tile_width] == '@':
+                if load_level(map_current)[player.rect.y // tile_height][(player.rect.x - tile_width) // tile_width] == '.' or load_level('map.txt')[player.rect.y // tile_height][(player.rect.x - tile_width) // tile_width] == '@':
                     player.rect.x -= tile_width
             if event.key == pygame.K_UP:
-                if load_level('map.txt')[(player.rect.y - tile_height)// tile_height][player.rect.x // tile_width] == '.' or load_level('map.txt')[(player.rect.y - tile_height)// tile_height][player.rect.x // tile_width] == '@':
+                if load_level(map_current)[(player.rect.y - tile_height)// tile_height][player.rect.x // tile_width] == '.' or load_level('map.txt')[(player.rect.y - tile_height)// tile_height][player.rect.x // tile_width] == '@':
                     player.rect.y -= tile_width
             if event.key == pygame.K_DOWN:
-                if load_level('map.txt')[(player.rect.y + tile_height) // tile_height][player.rect.x // tile_width] == '.' or load_level('map.txt')[(player.rect.y + tile_height) // tile_height][player.rect.x // tile_width] == '@':
+                if load_level(map_current)[(player.rect.y + tile_height) // tile_height][player.rect.x // tile_width] == '.' or load_level('map.txt')[(player.rect.y + tile_height) // tile_height][player.rect.x // tile_width] == '@':
                     player.rect.y += tile_width
     tiles_group.draw(screen)
     player_group.draw(screen)
