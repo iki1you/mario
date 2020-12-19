@@ -133,6 +133,7 @@ def generate_level(level):
 
 # группы спрайтов
 
+
 tiles_group = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
 
@@ -143,6 +144,11 @@ player = None
 start_screen()
 
 map_current = input()
+
+fullname = os.path.join('maps', map_current)
+if not os.path.isfile(fullname):
+    print(f"Файл с изображением '{fullname}' не найден")
+    sys.exit()
 
 camera = Camera()
 
