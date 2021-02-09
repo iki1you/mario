@@ -9,7 +9,7 @@ ZOOM = 17
 
 def map_write():
     map_file = "map.png"
-    map_request = f"https://static-maps.yandex.ru/1.x/?ll=37.620070,55.753630&z={ZOOM}&size=450,450&l=map"
+    map_request = f"https://static-maps.yandex.ru/1.x/?ll=37.620070,53.453630&z={ZOOM}&size=450,450&l=map"
     response = requests.get(map_request)
 
     if not response:
